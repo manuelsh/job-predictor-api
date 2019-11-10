@@ -1,0 +1,15 @@
+dist: trusty
+
+# The language could not be detected. This could be either because the repository was empty
+# or we were unable to detect the language appropiately. Please, change the language to the
+# appropiate value so the correct build script is executed.
+# - Common Platform Onboarding
+language: generic
+
+    
+after_failure:
+  - reports-publisher
+
+after_success:
+  - reports-publisher
+
