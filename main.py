@@ -41,9 +41,9 @@ decoder.load_state_dict(decoder_sd)
 # Instantiate flask
 app = Flask(__name__)
 
-@app.route("/predicted_job")
+@app.route("/")
 def predict():
-    desc = request.args.get("previous_job")
+    desc = request.args.get("prevjob")
     res = get_output(encoder, decoder, searcher, voc, max_length, device, input_sentence=desc)
     return Response(res)
 
