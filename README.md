@@ -15,4 +15,4 @@ source run_api.sh
 
 Example to get a future job:
 
-curl -v http://127.0.0.1:8080/previous_job?senior%20accountant
+curl -v http://127.0.0.1:8080/?prevjob=senior%20accountant

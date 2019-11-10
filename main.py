@@ -43,6 +43,7 @@ app = Flask(__name__)
 
 @app.route("/")
 def predict():
+    print(request.args)
     desc = request.args.get("prevjob")
     res = get_output(encoder, decoder, searcher, voc, max_length, device, input_sentence=desc)
     return Response(res)
