@@ -4,7 +4,7 @@ The model needs to be downloaded from:
 
 https://we.tl/t-Cxub1v8t0H
 
-and stored in the folder `model-parametes`.
+and stored in the folder `model-parameters`.
 
 To run the API from the container:
 ```
