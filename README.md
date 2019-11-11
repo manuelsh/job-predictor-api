@@ -18,7 +18,7 @@ Example to get a future job:
 
 `curl -v http://127.0.0.1:8080/?prevjob=senior%20data%20analyst`
 
-and will return a json like:
+and will return a json with the probabilities (in %) for each predicted job:
 
 ```
 [
