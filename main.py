@@ -1,9 +1,10 @@
-from flask import Flask, request, Response
+from flask import Flask, request, jsonify
 
 from model_class import *
 from utils import *
 import torch.nn as nn
 import torch
+from itertools import groupby
 
 # Main parameters
 device = 'cpu'
@@ -11,10 +12,11 @@ model_file_name = 'model-parameters/model.tar'
 hidden_size = 500
 encoder_n_layers = 3
 decoder_n_layers = 3
-dropout = 0.0
+dropout = 0.05
 attn_model = 'dot'
 max_length = 4  # Maximum sentence length to consider
 SOS_token = 1  # Start-of-sentence token
+num_iters = 50
 
 # Instantiate vocabulary
 voc = Voc()
@@ -45,8 +47,11 @@ app = Flask(__name__)
 def predict():
     print(request.args)
     desc = request.args.get("prevjob")
-    res = get_output(encoder, decoder, searcher, voc, max_length, device, input_sentence=desc)
-    return Response(res)
+    all_answers = [get_output(encoder, decoder, searcher, voc, max_length, device, input_sentence='data analyst') 
+               for i in range(num_iters)]
+    prob = {value: round( len(list(freq))/num_iters*100 ) for value, freq in groupby(sorted(all_answers))}
+    sorted_prob = [(k, prob[k]) for k in sorted(prob, key=prob.get, reverse=True)]
+    return jsonify(sorted_prob)
 
 if __name__ == "__main__":
     app.run(host="0.0.0.0", port=int("80"), debug=True)
